@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan E-commerce Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #667eea, #f093fb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: white;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card img {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, var(--success-color), #34d399);
+            border: none;
+            border-radius: 25px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .bounce-in {
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .alert-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            background: linear-gradient(45deg, var(--success-color), #34d399);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .cart-item-enter {
+            animation: cartItemEnter 0.5s ease-out;
+        }
+
+        @keyframes cartItemEnter {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .pulse-success {
+            animation: pulseSuccess 0.6s ease-out;
+        }
+
+        @keyframes pulseSuccess {
+            0% { background-color: var(--success-color); }
+            50% { background-color: #34d399; }
+            100% { background-color: var(--success-color); }
+        }
+        
+        .form-control:invalid {
+            border-color: var(--danger-color);
+        }
+        
+        .form-control:valid {
+            border-color: var(--success-color);
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand floating" href="#">
+                <i class="fas fa-store me-2"></i>Rohan E
+            </a>
+            <div class="navbar-nav ms-auto">
+                <div id="auth-buttons" class="d-flex align-items-center">
+                    <button class="btn btn-outline-light me-2 slide-in-right" onclick="showLogin()">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </button>
+                    <button class="btn btn-primary slide-in-right" onclick="showRegister()" style="animation-delay: 0.1s">
+                        <i class="fas fa-user-plus me-2"></i>Register
+                    </button>
+                </div>
+                <div id="user-menu" class="hidden d-flex align-items-center">
+                    <span class="navbar-text me-3 fade-in" id="user-name"></span>
+                    <button class="btn btn-outline-light me-2 position-relative bounce-in" onclick="showOrders()">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="btn btn-outline-light me-2 position-relative bounce-in" onclick="showCart()" style="animation-delay: 0.1s">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge badge bg-danger" id="cart-count">0</span>
+                    </button>
+                    <button class="btn btn-outline-light bounce-in" onclick="logout()" style="animation-delay: 0.2s">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section hidden" id="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">Welcome to Rohan E-store!</h1>
+            <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Discover amazing products at great prices</p>
+            
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Auth Forms -->
+        <div id="auth-forms" class="hidden">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <!-- Login Form -->
+                    <div id="login-form" class="card hidden slide-in-left">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form onsubmit="login(event)">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="login-email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="login-password" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2">
+                                    <span id="login-text">Login</span>
+                                    <span id="login-spinner" class="loading-spinner hidden"></span>
+                                </button>
+                            </form>
+                            <p class="mt-3 text-center">
+                                Don't have an account? <a href="#" class="gradient-text" onclick="showRegister()">Register here</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="register-form" class="card hidden slide-in-right">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0"><i class="fas fa-user-plus me-2"></i>Register</h3>
+                        </div>
+                        <div class="card-body">
+                            <form onsubmit="register(event)">
+                                <div class="mb-3">
+                                    <label class="form-label">Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control" id="register-name" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="register-email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="register-password" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 py-2">
+                                    <span id="register-text">Register</span>
+                                    <span id="register-spinner" class="loading-spinner hidden"></span>
+                                </button>
+                            </form>
+                            <p class="mt-3 text-center">
+                                Already have an account? <a href="#" class="gradient-text" onclick="showLogin()">Login here</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products-section" class="hidden fade-in">
+            <div class="text-center mb-5">
+                <h2 class="gradient-text">Featured Products</h2>
+                <p class="lead">Discover our amazing collection of products</p>
+            </div>
+            <div id="products-container" class="row"></div>
+        </div>
+
+        <!-- Cart Section -->
+        <div id="cart-section" class="hidden fade-in">
+            <h2 class="gradient-text mb-4"><i class="fas fa-shopping-cart me-2"></i>Shopping Cart</h2>
+            <div id="cart-items" class="mb-4"></div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-truck me-2"></i>Shipping Information</h4>
+                </div>
+                <div class="card-body">
+                    <form id="shipping-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Street Address</label>
+                                    <input type="text" class="form-control" name="street" required>
+                                    <div class="error-message" id="street-error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" name="city" required>
+                                    <div class="error-message" id="city-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">State</label>
+                                    <input type="text" class="form-control" name="state" required>
+                                    <div class="error-message" id="state-error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-control" name="zipCode" required pattern="[0-9]{5,10}">
+                                    <div class="error-message" id="zipCode-error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" class="form-control" name="country" required>
+                                    <div class="error-message" id="country-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center p-4 bg-light rounded">
+                <h3 class="gradient-text">Total: $<span id="cart-total">0.00</span></h3>
+                <div class="mt-3">
+                    <button class="btn btn-success btn-lg me-3 pulse-success" onclick="placeOrder()">
+                        <i class="fas fa-check me-2"></i>Place Order
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="showProducts()">
+                        <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders-section" class="hidden fade-in">
+            <h2 class="gradient-text mb-4"><i class="fas fa-list-alt me-2"></i>My Orders</h2>
+            <div id="orders-container"></div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="position-fixed top-0 left-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center hidden" style="z-index: 1060;">
+        <div class="text-center text-white">
+            <div class="loading-spinner mb-3" style="width: 50px; height: 50px; border-width: 5px;"></div>
+            <h4>Loading...</h4>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:5500/api';
+        let currentUser = null;
+        let cart = [];
+        let products = [];
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            loadProducts();
+            setupFormValidation();
+        });
+
+        // Form Validation Setup
+        function setupFormValidation() {
+            const shippingForm = document.getElementById('shipping-form');
+            const inputs = shippingForm.querySelectorAll('input[required]');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateField);
+                input.addEventListener('input', clearFieldError);
+            });
+        }
+
+        function validateField(e) {
+            const field = e.target;
+            const errorElement = document.getElementById(`${field.name}-error`);
+            
+            if (!field.value.trim()) {
+                showFieldError(field, errorElement, 'This field is required');
+                return false;
+            }
+            
+            if (field.name === 'zipCode' && !/^[0-9]{5,10}$/.test(field.value)) {
+                showFieldError(field, errorElement, 'Please enter a valid ZIP code (5-10 digits)');
+                return false;
+            }
+            
+            clearFieldError(field);
+            return true;
+        }
+
+        function showFieldError(field, errorElement, message) {
+            field.classList.add('is-invalid');
+            if (errorElement) {
+                errorElement.textContent = message;
+            }
+        }
+
+        function clearFieldError(e) {
+            const field = e.target || e;
+            const errorElement = document.getElementById(`${field.name}-error`);
+            
+            field.classList.remove('is-invalid');
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+        }
+
+        function validateShippingForm() {
+            const shippingForm = document.getElementById('shipping-form');
+            const inputs = shippingForm.querySelectorAll('input[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                const event = new Event('blur');
+                input.dispatchEvent(event);
+                if (input.classList.contains('is-invalid')) {
+                    isValid = false;
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Auth Functions
+        function checkAuthStatus() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const userData = localStorage.getItem('user');
+                if (userData) {
+                    currentUser = JSON.parse(userData);
+                    showUserMenu();
+                    loadCartFromStorage();
+                    showHeroSection();
+                }
+            } else {
+                showAuthForms();
+            }
+        }
+
+        function showHeroSection() {
+            document.getElementById('hero-section').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('hero-section').classList.add('animate__animated', 'animate__fadeIn');
+            }, 100);
+        }
+
+        function showAuthForms() {
+            document.getElementById('auth-forms').classList.remove('hidden');
+            document.getElementById('products-section').classList.add('hidden');
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('auth-buttons').classList.remove('hidden');
+            document.getElementById('user-menu').classList.add('hidden');
+            showLogin();
+        }
+
+        function showUserMenu() {
+            document.getElementById('auth-forms').classList.add('hidden');
+            document.getElementById('products-section').classList.remove('hidden');
+            document.getElementById('hero-section').classList.remove('hidden');
+            document.getElementById('auth-buttons').classList.add('hidden');
+            document.getElementById('user-menu').classList.remove('hidden');
+            document.getElementById('user-name').textContent = currentUser.name;
+        }
+
+        function showLogin() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            animateForm('login-form');
+        }
+
+        function showRegister() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+            animateForm('register-form');
+        }
+
+        function animateForm(formId) {
+            const form = document.getElementById(formId);
+            form.classList.remove('slide-in-left', 'slide-in-right');
+            void form.offsetWidth; // Trigger reflow
+            form.classList.add(formId === 'login-form' ? 'slide-in-left' : 'slide-in-right');
+        }
+
+        async function register(e) {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            showLoading('register');
+            
+            try {
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+                hideLoading('register');
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    showUserMenu();
+                    showAlert('🎉 Registration successful! Welcome to our store!', 'success');
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                hideLoading('register');
+                showAlert('❌ Error during registration', 'danger');
+            }
+        }
+
+        async function login(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            showLoading('login');
+            
+            try {
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                hideLoading('login');
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    showUserMenu();
+                    showAlert('👋 Welcome back, ' + data.user.name + '!', 'success');
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                hideLoading('login');
+                showAlert('❌ Error during login', 'danger');
+            }
+        }
+
+        function showLoading(type) {
+            document.getElementById(type + '-text').classList.add('hidden');
+            document.getElementById(type + '-spinner').classList.remove('hidden');
+        }
+
+        function hideLoading(type) {
+            document.getElementById(type + '-text').classList.remove('hidden');
+            document.getElementById(type + '-spinner').classList.add('hidden');
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('cart');
+            currentUser = null;
+            cart = [];
+            showAuthForms();
+            showAlert('👋 Logged out successfully', 'info');
+        }
+
+        // Product Functions
+        async function loadProducts() {
+            showGlobalLoading();
+            try {
+                const response = await fetch(`${API_BASE}/products`);
+                products = await response.json();
+                displayProducts();
+                hideGlobalLoading();
+            } catch (error) {
+                hideGlobalLoading();
+                showAlert('❌ Error loading products', 'danger');
+            }
+        }
+
+        function displayProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = products.map((product, index) => `
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                    <div class="card product-card">
+                        <div style="height: 250px; overflow: hidden;">
+                            <img src="${product.image}" class="card-img-top" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text text-muted">${product.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$${product.price}</span>
+                                <button class="btn btn-primary" onclick="addToCart('${product._id}')">
+                                    <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            if (!currentUser) {
+                showAlert('⚠️ Please login to add items to cart', 'warning');
+                return;
+            }
+
+            const product = products.find(p => p._id === productId);
+            if (product) {
+                const existingItem = cart.find(item => item.productId === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        productId: productId,
+                        quantity: 1,
+                        price: product.price,
+                        name: product.name
+                    });
+                }
+                updateCart();
+                
+                // Add animation to cart button
+                const cartBtn = document.querySelector('[onclick="showCart()"]');
+                cartBtn.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => {
+                    cartBtn.classList.remove('animate__animated', 'animate__pulse');
+                }, 1000);
+                
+                showAlert('🛒 Product added to cart!', 'success');
+            }
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">Your cart is empty</h4>
+                        <p class="text-muted">Add some products to get started!</p>
+                    </div>
+                `;
+                cartTotal.textContent = '0.00';
+                return;
+            }
+
+            let total = 0;
+            cartItems.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `
+                    <div class="card mb-3 cart-item-enter" style="animation-delay: ${index * 0.1}s">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-1">${item.name}</h5>
+                                    <p class="text-muted mb-0">$${item.price} each</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-sm quantity-btn btn-outline-secondary me-2" onclick="updateQuantity('${item.productId}', -1)">-</button>
+                                    <span class="mx-3 fw-bold">${item.quantity}</span>
+                                    <button class="btn btn-sm quantity-btn btn-outline-secondary me-3" onclick="updateQuantity('${item.productId}', 1)">+</button>
+                                    <span class="fw-bold text-primary">$${itemTotal.toFixed(2)}</span>
+                                    <button class="btn btn-sm btn-danger ms-3" onclick="removeFromCart('${item.productId}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.productId === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                    showAlert('📦 Quantity updated', 'info');
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.productId !== productId);
+            updateCart();
+            showAlert('🗑️ Product removed from cart', 'info');
+        }
+
+        function showCart() {
+            hideAllSections();
+            document.getElementById('cart-section').classList.remove('hidden');
+            updateCartDisplay();
+        }
+
+        function showProducts() {
+            hideAllSections();
+            document.getElementById('products-section').classList.remove('hidden');
+            document.getElementById('hero-section').classList.remove('hidden');
+        }
+
+        function showOrders() {
+            hideAllSections();
+            document.getElementById('orders-section').classList.remove('hidden');
+            loadOrders();
+        }
+
+        function hideAllSections() {
+            document.getElementById('products-section').classList.add('hidden');
+            document.getElementById('cart-section').classList.add('hidden');
+            document.getElementById('orders-section').classList.add('hidden');
+            document.getElementById('hero-section').classList.add('hidden');
+        }
+
+        // Order Functions
+        async function placeOrder() {
+            if (cart.length === 0) {
+                showAlert('⚠️ Your cart is empty', 'warning');
+                return;
+            }
+
+            // Validate shipping form
+            if (!validateShippingForm()) {
+                showAlert('⚠️ Please fill in all required shipping information correctly', 'warning');
+                return;
+            }
+
+            const shippingForm = document.getElementById('shipping-form');
+            const formData = new FormData(shippingForm);
+            const shippingAddress = {
+                street: formData.get('street'),
+                city: formData.get('city'),
+                state: formData.get('state'),
+                zipCode: formData.get('zipCode'),
+                country: formData.get('country')
+            };
+
+            showGlobalLoading();
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_BASE}/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        products: cart.map(item => ({
+                            productId: item.productId,
+                            quantity: item.quantity,
+                            price: item.price
+                        })),
+                        shippingAddress
+                    })
+                });
+
+                const data = await response.json();
+                hideGlobalLoading();
+
+                if (response.ok) {
+                    showAlert('🎉 Order placed successfully! Check your email for confirmation.', 'success');
+                    cart = [];
+                    updateCart();
+                    shippingForm.reset();
+                    showProducts();
+                } else {
+                    showAlert(data.message, 'danger');
+                }
+            } catch (error) {
+                hideGlobalLoading();
+                showAlert('❌ Error placing order', 'danger');
+            }
+        }
+
+        async function loadOrders() {
+            showGlobalLoading();
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_BASE}/orders`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const orders = await response.json();
+                displayOrders(orders);
+                hideGlobalLoading();
+            } catch (error) {
+                hideGlobalLoading();
+                showAlert('❌ Error loading orders', 'danger');
+            }
+        }
+
+        function displayOrders(orders) {
+            const container = document.getElementById('orders-container');
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No orders found</h4>
+                        <p class="text-muted">Start shopping to see your orders here!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = orders.map((order, index) => `
+                <div class="card mb-4 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">Order #${order._id.slice(-8)}</h5>
+                            <small class="text-muted">Date: ${new Date(order.createdAt).toLocaleDateString()}</small>
+                        </div>
+                        <span class="badge bg-${getStatusColor(order.status)}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <div class="card-body">
+                        <h6><i class="fas fa-boxes me-2"></i>Products:</h6>
+                        ${order.products.map(item => `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>${item.productId?.name || 'Product'} x ${item.quantity}</span>
+                                <span class="fw-bold">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold fs-5">
+                            <span>Total Amount:</span>
+                            <span class="text-primary">$${order.totalAmount.toFixed(2)}</span>
+                        </div>
+                        <h6 class="mt-3"><i class="fas fa-map-marker-alt me-2"></i>Shipping Address:</h6>
+                        <p class="mb-0">${order.shippingAddress.street}<br>
+                           ${order.shippingAddress.city}, ${order.shippingAddress.state}<br>
+                           ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'pending': return 'warning';
+                case 'shipped': return 'info';
+                case 'delivered': return 'success';
+                default: return 'secondary';
+            }
+        }
+
+        // Utility Functions
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-custom alert-dismissible fade show animate__animated animate__bounceIn`;
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.classList.remove('animate__bounceIn');
+                    alert.classList.add('animate__fadeOut');
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        function showGlobalLoading() {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+
+        function hideGlobalLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
